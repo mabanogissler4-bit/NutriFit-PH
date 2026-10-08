@@ -1,4 +1,5 @@
 import { Activity, ArrowRight, HeartPulse, Utensils } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Home() {
   return (
@@ -23,8 +24,13 @@ function Home() {
         </nav>
 
         <div className="nav-actions">
-          <button className="login-button">Log in</button>
-          <button className="signup-button">Get Started</button>
+          <Link to="/login" className="login-button">
+            Log in
+          </Link>
+
+          <Link to="/register" className="signup-button">
+            Get Started
+          </Link>
         </div>
       </header>
 
@@ -50,14 +56,14 @@ function Home() {
             </p>
 
             <div className="hero-actions">
-              <button className="primary-button">
+              <Link to="/register" className="primary-button">
                 Start your journey
                 <ArrowRight size={18} />
-              </button>
+              </Link>
 
-              <button className="secondary-button">
+              <a href="#features" className="secondary-button">
                 Explore NutriFit
-              </button>
+              </a>
             </div>
 
             <div className="hero-stats">
@@ -97,6 +103,7 @@ function Home() {
 
             <div className="floating-card nutrition-card">
               <Utensils size={18} />
+
               <div>
                 <strong>Nutrition</strong>
                 <span>Balanced & personalized</span>
@@ -105,6 +112,7 @@ function Home() {
 
             <div className="floating-card fitness-card">
               <Activity size={18} />
+
               <div>
                 <strong>Fitness</strong>
                 <span>Progress every day</span>
@@ -125,7 +133,9 @@ function Home() {
               <div className="feature-icon nutrition-icon">
                 <Utensils size={22} />
               </div>
+
               <h3>Nutrition tracking</h3>
+
               <p>
                 Understand what you're eating and make smarter food choices
                 without complicated tracking.
@@ -136,7 +146,9 @@ function Home() {
               <div className="feature-icon fitness-icon">
                 <Activity size={22} />
               </div>
+
               <h3>Fitness tracking</h3>
+
               <p>
                 Keep your activity, goals, and progress in one simple place.
               </p>
@@ -146,7 +158,9 @@ function Home() {
               <div className="feature-icon health-icon">
                 <HeartPulse size={22} />
               </div>
+
               <h3>Personalized goals</h3>
+
               <p>
                 Build a health plan around your own body, lifestyle, and goals.
               </p>
