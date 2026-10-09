@@ -1,5 +1,6 @@
 import { ArrowLeft, Eye, EyeOff, HeartPulse, Lock, Mail, User } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Register() {

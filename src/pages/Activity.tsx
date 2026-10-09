@@ -1,4 +1,5 @@
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import {
   Dumbbell,
   HeartPulse,
@@ -523,7 +524,7 @@ function Activity() {
                         {activityLabels[
                           activity.activityType
                         ] || activity.activityType}
-                        {" · "}
+                        {" ï¿½ "}
                         {activity.duration} min
                       </span>
                     </div>

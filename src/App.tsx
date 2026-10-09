@@ -9,6 +9,8 @@ import ProfileSetup from "./pages/ProfileSetup";
 import AddMeal from "./pages/AddMeal";
 import Progress from "./pages/Progress";
 import Activity from "./pages/Activity";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -16,6 +18,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+<Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route

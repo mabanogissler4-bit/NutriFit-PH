@@ -1,0 +1,534 @@
+﻿/* ========================================
+   NUTRIFIT-PH HOME PAGE
+======================================== */
+
+.app {
+  min-height: 100vh;
+  background: #faf9fd;
+  color: #20143a;
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+.navbar {
+  min-height: 82px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: white;
+  background: #2f0f75;
+  border-radius: 14px;
+}
+
+.brand-name {
+  color: #2f0f75;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.brand-name span {
+  color: #4cc8ef;
+}
+
+.brand-name small {
+  color: #f62584;
+  font-size: 10px;
+  vertical-align: top;
+}
+
+.nav-links,
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.nav-links a,
+.login-button {
+  color: #514765;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.nav-links a:hover,
+.login-button:hover {
+  color: #2f0f75;
+}
+
+.signup-button,
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border: 0;
+  border-radius: 11px;
+  background: #2f0f75;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.signup-button:hover,
+.primary-button:hover {
+  background: #4920a0;
+  transform: translateY(-2px);
+}
+
+.hero {
+  max-width: 1440px;
+  min-height: 570px;
+  margin: 0 auto;
+  padding: 65px 6% 75px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 48px;
+  box-sizing: border-box;
+}
+
+.hero-content {
+  max-width: 620px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px;
+  border: 1px solid #e8e0f7;
+  border-radius: 999px;
+  background: #f0eafb;
+  color: #2f0f75;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero h1 {
+  margin: 25px 0 20px;
+  color: #20143a;
+  font-size: clamp(42px, 5vw, 68px);
+  line-height: 1.08;
+  letter-spacing: -2px;
+}
+
+.hero h1 span {
+  color: #2f0f75;
+}
+
+.hero-content > p {
+  max-width: 540px;
+  color: #716981;
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.primary-button {
+  min-height: 48px;
+}
+
+.secondary-button {
+  padding: 13px 18px;
+  border: 1px solid #e4dced;
+  border-radius: 11px;
+  color: #2f0f75;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.secondary-button:hover {
+  background: #f0eafb;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 45px;
+}
+
+.hero-stats > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-stats strong {
+  color: #4cc8ef;
+  font-size: 14px;
+}
+
+.hero-stats span {
+  color: #5d536d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 410px;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.reactor-glow {
+  position: absolute;
+  z-index: -1;
+  width: 330px;
+  height: 330px;
+  border-radius: 50%;
+  background: #eae0ff;
+  filter: blur(35px);
+  opacity: 0.8;
+}
+
+.reactor {
+  position: relative;
+  width: min(300px, 65vw);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d7c8f4;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #f0eafb 68%, #e1d5fa 100%);
+  box-shadow: 0 25px 80px #2f0f7520;
+}
+
+.reactor-ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.reactor-ring-outer {
+  inset: 14px;
+  border: 5px solid #2f0f7520;
+  border-top-color: #4cc8ef;
+  border-right-color: #f62584;
+  transform: rotate(-25deg);
+}
+
+.reactor-ring-middle {
+  inset: 38px;
+  border: 2px solid #b9a4e8;
+  border-left-color: #4cc8ef;
+  border-bottom-color: #f62584;
+  transform: rotate(35deg);
+}
+
+.reactor-fluid {
+  position: absolute;
+  width: 155px;
+  height: 48px;
+  border: 7px solid transparent;
+  border-radius: 50%;
+  transform: rotate(-35deg);
+}
+
+.fluid-one {
+  border-top-color: #4cc8ef;
+  top: 85px;
+  left: 48px;
+}
+
+.fluid-two {
+  border-bottom-color: #f62584;
+  right: 38px;
+  bottom: 78px;
+  transform: rotate(-35deg);
+}
+
+.fluid-three {
+  width: 95px;
+  height: 30px;
+  border-top-color: #e9a23b;
+  left: 94px;
+  bottom: 65px;
+  transform: rotate(35deg);
+}
+
+.reactor-core {
+  width: 100px;
+  height: 100px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d9c9f4;
+  border-radius: 28px;
+  background: white;
+  color: #2f0f75;
+  box-shadow: 0 10px 35px #2f0f7520;
+}
+
+.floating-card {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 18px;
+  border: 1px solid #eee8f6;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 15px 40px #2f0f7512;
+}
+
+.floating-card > svg {
+  color: #2f0f75;
+}
+
+.floating-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.floating-card strong {
+  color: #2f0f75;
+  font-size: 13px;
+}
+
+.floating-card span {
+  color: #81778f;
+  font-size: 11px;
+}
+
+.nutrition-card {
+  top: 55px;
+  left: 0;
+}
+
+.fitness-card {
+  right: 0;
+  bottom: 55px;
+}
+
+.features {
+  padding: 80px 6% 100px;
+  background: white;
+}
+
+.section-heading {
+  max-width: 650px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.section-heading > span {
+  color: #2f0f75;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.section-heading h2 {
+  margin: 14px 0 0;
+  color: #20143a;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.25;
+}
+
+.feature-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  padding: 30px;
+  border: 1px solid #eee8f6;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 35px #2f0f7508;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 40px #2f0f7514;
+}
+
+.feature-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  color: #2f0f75;
+  background: #f0eafb;
+}
+
+.fitness-icon {
+  color: #087c9c;
+  background: #e4f8fd;
+}
+
+.health-icon {
+  color: #c51d70;
+  background: #fff0f7;
+}
+
+.feature-card h3 {
+  margin: 22px 0 10px;
+  color: #20143a;
+  font-size: 19px;
+}
+
+.feature-card p {
+  margin: 0;
+  color: #716981;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+@media (max-width: 850px) {
+  .navbar {
+    flex-wrap: wrap;
+    padding: 18px 5%;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 22px;
+  }
+
+  .nav-actions {
+    gap: 16px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 55px 6%;
+  }
+
+  .hero-content {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .eyebrow,
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-content > p {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .hero-visual {
+    min-height: 370px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    gap: 14px;
+  }
+
+  .brand-name {
+    font-size: 18px;
+  }
+
+  .signup-button {
+    padding: 11px 13px;
+    font-size: 12px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  .hero h1 {
+    letter-spacing: -1px;
+  }
+
+  .hero-stats {
+    gap: 15px;
+  }
+
+  .hero-stats > div {
+    gap: 6px;
+  }
+
+  .hero-visual {
+    min-height: 320px;
+  }
+
+  .reactor {
+    width: 245px;
+  }
+
+  .nutrition-card {
+    top: 15px;
+    left: -5px;
+  }
+
+  .fitness-card {
+    right: -5px;
+    bottom: 15px;
+  }
+
+  .floating-card {
+    padding: 10px;
+    gap: 7px;
+  }
+
+  .floating-card span {
+    font-size: 10px;
+  }
+
+  .features {
+    padding: 60px 5%;
+  }
+
+  .feature-card {
+    padding: 24px;
+  }
+}

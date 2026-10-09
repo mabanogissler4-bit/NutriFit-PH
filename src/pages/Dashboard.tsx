@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   Dumbbell,
@@ -7,6 +8,7 @@ import {
   TrendingUp,
   Utensils,
   Trash2,
+  UserRound,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -96,6 +98,8 @@ function Dashboard() {
         if (profileResponse.ok) {
           const profileData = await profileResponse.json();
           setNutrition(profileData.nutrition);
+        } else {
+          setNutrition(null);
         }
 
         const mealsResponse = await fetch(
@@ -142,7 +146,6 @@ function Dashboard() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-
     navigate("/login");
   };
 
@@ -199,32 +202,36 @@ function Dashboard() {
   );
 
   const totalCarbohydrates = meals.reduce(
-  (total, meal) => total + (meal.carbohydrates || 0),
-  0
-);
+    (total, meal) => total + (meal.carbohydrates || 0),
+    0
+  );
 
-const totalFat = meals.reduce(
-  (total, meal) => total + (meal.fat || 0),
-  0
-);
+  const totalFat = meals.reduce(
+    (total, meal) => total + (meal.fat || 0),
+    0
+  );
 
-  
-const totalCaloriesBurned = activities.reduce(
-  (total, activity) => total + activity.caloriesBurned,
-  0
-);
+  const totalCaloriesBurned = activities.reduce(
+    (total, activity) => total + activity.caloriesBurned,
+    0
+  );
 
-const totalActivityDuration = activities.reduce(
-  (total, activity) => total + activity.duration,
-  0
-);
+  const netCalories = totalCalories - totalCaloriesBurned;
 
-const activityCount = activities.length;
-const calorieTarget = nutrition?.calorieTarget || 0;
+  const totalActivityDuration = activities.reduce(
+    (total, activity) => total + activity.duration,
+    0
+  );
+
+  const activityCount = activities.length;
+  const calorieTarget = nutrition?.calorieTarget || 0;
 
   const calorieProgress =
     calorieTarget > 0
-      ? Math.min(Math.round((totalCalories / calorieTarget) * 100), 100)
+      ? Math.min(
+          Math.round((totalCalories / calorieTarget) * 100),
+          100
+        )
       : 0;
 
   const getMealTypeLabel = (mealType: Meal["mealType"]) => {
@@ -251,35 +258,28 @@ const calorieTarget = nutrition?.calorieTarget || 0;
             Dashboard
           </button>
 
-          <Link
-            to="/add-meal"
-            className="dashboard-nav-item"
-          >
+          <Link to="/add-meal" className="dashboard-nav-item">
             <Utensils size={19} />
             Meals
           </Link>
 
-          <Link
-            to="/activity"
-            className="dashboard-nav-item"
-          >
+          <Link to="/profile-setup" className="dashboard-nav-item">
+            <UserRound size={19} />
+            Profile Setup
+          </Link>
+
+          <Link to="/activity" className="dashboard-nav-item">
             <Dumbbell size={19} />
             Activity
           </Link>
 
-          <Link
-            to="/progress"
-            className="dashboard-nav-item"
-          >
+          <Link to="/progress" className="dashboard-nav-item">
             <TrendingUp size={19} />
             Progress
           </Link>
         </nav>
 
-        <button
-          className="dashboard-logout"
-          onClick={handleLogout}
-        >
+        <button className="dashboard-logout" onClick={handleLogout}>
           <LogOut size={19} />
           Log out
         </button>
@@ -314,6 +314,30 @@ const calorieTarget = nutrition?.calorieTarget || 0;
           </div>
         </header>
 
+        {!nutrition && (
+          <section className="dashboard-section">
+            <div className="dashboard-empty-state">
+              <div className="dashboard-empty-icon">
+                <HeartPulse size={24} />
+              </div>
+
+              <h3>Complete your nutrition profile</h3>
+
+              <p>
+                Add your age, height, weight, activity level, and goal
+                to calculate your personalized daily nutrition targets.
+              </p>
+
+              <Link
+                to="/profile-setup"
+                className="dashboard-primary-button"
+              >
+                Set Up Profile
+              </Link>
+            </div>
+          </section>
+        )}
+
         <section className="dashboard-hero">
           <div>
             <span className="dashboard-card-label">
@@ -340,64 +364,50 @@ const calorieTarget = nutrition?.calorieTarget || 0;
         </section>
 
         <section className="dashboard-stats">
-  <div className="dashboard-stat-card">
-    <span>Calories</span>
+          <div className="dashboard-stat-card">
+            <span>Calories</span>
+            <strong>{totalCalories.toLocaleString()}</strong>
+            <small>
+              of {nutrition?.calorieTarget.toLocaleString() || "—"} kcal
+            </small>
+          </div>
 
-    <strong>
-      {totalCalories.toLocaleString()}
-    </strong>
+          <div className="dashboard-stat-card">
+            <span>Protein</span>
+            <strong>
+              {Math.round(totalProtein)} /{" "}
+              {nutrition?.proteinTarget ?? "—"} g
+            </strong>
+            <small>of daily goal</small>
+          </div>
 
-    <small>
-      of {nutrition?.calorieTarget.toLocaleString() || "—"} kcal
-    </small>
-  </div>
+          <div className="dashboard-stat-card">
+            <span>Carbs</span>
+            <strong>{Math.round(totalCarbohydrates)} g</strong>
+            <small>today</small>
+          </div>
 
-  <div className="dashboard-stat-card">
-    <span>Protein</span>
+          <div className="dashboard-stat-card">
+            <span>Fat</span>
+            <strong>{Math.round(totalFat)} g</strong>
+            <small>today</small>
+          </div>
 
-    <strong>
-      {Math.round(totalProtein)} /{" "}
-      {nutrition?.proteinTarget ?? "—"} g
-    </strong>
-
-    <small>of daily goal</small>
-  </div>
-
-  <div className="dashboard-stat-card">
-    <span>Carbs</span>
-
-    <strong>
-      {Math.round(totalCarbohydrates)} g
-    </strong>
-
-    <small>today</small>
-  </div>
-
-  <div className="dashboard-stat-card">
-    <span>Fat</span>
-
-    <strong>
-      {Math.round(totalFat)} g
-    </strong>
-
-    <small>today</small>
-  </div>
-</section>
+          <div className="dashboard-stat-card">
+            <span>Net Calories</span>
+            <strong>{netCalories.toLocaleString()}</strong>
+            <small>after activity</small>
+          </div>
+        </section>
 
         <section className="dashboard-section">
           <div className="dashboard-section-heading">
             <div>
-              <span className="dashboard-eyebrow">
-                TODAY
-              </span>
-
+              <span className="dashboard-eyebrow">TODAY</span>
               <h2>Today's meals</h2>
             </div>
 
-            <Link
-              to="/add-meal"
-              className="dashboard-add-button"
-            >
+            <Link to="/add-meal" className="dashboard-add-button">
               + Add meal
             </Link>
           </div>
@@ -425,19 +435,13 @@ const calorieTarget = nutrition?.calorieTarget || 0;
           ) : (
             <div className="dashboard-meals-list">
               {meals.map((meal) => (
-                <div
-                  className="dashboard-meal-card"
-                  key={meal._id}
-                >
+                <div className="dashboard-meal-card" key={meal._id}>
                   <div className="dashboard-meal-icon">
                     <Utensils size={20} />
                   </div>
 
                   <div className="dashboard-meal-info">
-                    <span>
-                      {getMealTypeLabel(meal.mealType)}
-                    </span>
-
+                    <span>{getMealTypeLabel(meal.mealType)}</span>
                     <h3>{meal.foodName}</h3>
 
                     <p>
@@ -450,25 +454,14 @@ const calorieTarget = nutrition?.calorieTarget || 0;
                     <strong>
                       {meal.calories.toLocaleString()} kcal
                     </strong>
-
-                    <span>
-                      {meal.protein} g protein
-                    </span>
-
-                    <span>
-                      {meal.carbohydrates ?? 0} g carbs
-                    </span>
-
-                    <span>
-                      {meal.fat ?? 0} g fat
-                    </span>
+                    <span>{meal.protein} g protein</span>
+                    <span>{meal.carbohydrates ?? 0} g carbs</span>
+                    <span>{meal.fat ?? 0} g fat</span>
                   </div>
 
                   <button
                     className="dashboard-meal-delete"
-                    onClick={() =>
-                      handleDeleteMeal(meal._id)
-                    }
+                    onClick={() => handleDeleteMeal(meal._id)}
                     disabled={isDeleting === meal._id}
                     aria-label={`Delete ${meal.foodName}`}
                     title="Delete meal"
@@ -484,17 +477,11 @@ const calorieTarget = nutrition?.calorieTarget || 0;
         <section className="dashboard-section dashboard-activity-section">
           <div className="dashboard-section-heading">
             <div>
-              <span className="dashboard-eyebrow">
-                TODAY
-              </span>
-
+              <span className="dashboard-eyebrow">TODAY</span>
               <h2>Today's activity</h2>
             </div>
 
-            <Link
-              to="/activity"
-              className="dashboard-add-button"
-            >
+            <Link to="/activity" className="dashboard-add-button">
               + Log activity
             </Link>
           </div>
@@ -509,7 +496,6 @@ const calorieTarget = nutrition?.calorieTarget || 0;
                 <strong>
                   {totalCaloriesBurned.toLocaleString()} kcal
                 </strong>
-
                 <span>Calories burned</span>
               </div>
             </div>
@@ -521,7 +507,6 @@ const calorieTarget = nutrition?.calorieTarget || 0;
 
               <div>
                 <strong>{totalActivityDuration} min</strong>
-
                 <span>Active time</span>
               </div>
             </div>
@@ -533,7 +518,6 @@ const calorieTarget = nutrition?.calorieTarget || 0;
 
               <div>
                 <strong>{activityCount}</strong>
-
                 <span>Activities</span>
               </div>
             </div>
@@ -572,9 +556,7 @@ const calorieTarget = nutrition?.calorieTarget || 0;
 
                   <div className="dashboard-activity-info">
                     <span>{activity.activityType}</span>
-
                     <h3>{activity.activityName}</h3>
-
                     <p>{activity.duration} minutes</p>
                   </div>
 
@@ -582,7 +564,6 @@ const calorieTarget = nutrition?.calorieTarget || 0;
                     <strong>
                       {activity.caloriesBurned.toLocaleString()} kcal
                     </strong>
-
                     <span>burned</span>
                   </div>
                 </div>
@@ -590,22 +571,9 @@ const calorieTarget = nutrition?.calorieTarget || 0;
             </div>
           )}
         </section>
-
       </section>
     </main>
   );
 }
 
 export default Dashboard;
-
-
-
-
-
-
-
-
-
-
-
-

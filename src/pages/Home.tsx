@@ -1,3 +1,4 @@
+﻿import "./Home.css";
 import { Activity, ArrowRight, HeartPulse, Utensils } from "lucide-react";
 import { Link } from "react-router-dom";
 

@@ -1,12 +1,11 @@
+
 import { ArrowLeft, Eye, EyeOff, HeartPulse, Lock, Mail } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 function Login() {
-
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,59 +14,59 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-  setError("");
+    event.preventDefault();
+    setError("");
 
-  try {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    const response = await fetch(
-      "http://localhost:5000/api/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+      const response = await fetch(
+        "http://localhost:5000/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Login failed.");
+        return;
       }
-    );
 
-    const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-    if (!response.ok) {
-      setError(data.message || "Login failed.");
-      return;
+      const profileResponse = await fetch(
+        "http://localhost:5000/api/profile",
+        {
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        }
+      );
+
+      if (profileResponse.ok) {
+        navigate("/dashboard");
+      } else if (profileResponse.status === 404) {
+        navigate("/profile-setup");
+      } else {
+        setError("Unable to check your nutrition profile.");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Unable to connect to the server.");
+    } finally {
+      setIsLoading(false);
     }
-
-    localStorage.setItem("token", data.token);
-localStorage.setItem("user", JSON.stringify(data.user));
-
-const profileResponse = await fetch(
-  "http://localhost:5000/api/profile",
-  {
-    headers: {
-      Authorization: `Bearer ${data.token}`,
-    },
-  }
-);
-
-if (profileResponse.ok) {
-  navigate("/dashboard");
-} else if (profileResponse.status === 404) {
-  navigate("/profile-setup");
-} else {
-  setError("Unable to check your nutrition profile.");
-}
-  } catch (error) {
-    console.error("Login error:", error);
-    setError("Unable to connect to the server.");
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   return (
     <main className="auth-page">
@@ -109,25 +108,29 @@ if (profileResponse.ok) {
 
               <div className="input-wrapper">
                 <Mail size={19} />
-                  <input
-                    id="email"
-                    type="email"
-                    placeholder="you@example.com"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    required
-                  />
-                
+
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                />
               </div>
             </div>
 
             <div className="form-group">
               <div className="password-label">
                 <label htmlFor="password">Password</label>
-                <button type="button" className="forgot-password">
+
+                <Link
+                  to="/forgot-password"
+                  className="forgot-password"
+                >
                   Forgot password?
-                </button>
+                </Link>
               </div>
 
               <div className="input-wrapper">
@@ -163,11 +166,11 @@ if (profileResponse.ok) {
             {error && <p className="auth-error">{error}</p>}
 
             <button
-                type="submit"
-                className="auth-submit"
-                disabled={isLoading}
-              >
-                {isLoading ? "Logging in..." : "Log in"}
+              type="submit"
+              className="auth-submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Logging in..." : "Log in"}
             </button>
           </form>
 
